@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Patrick Neve — Fitness Lighthouse</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  body { margin: 0; padding: 2rem 1rem; background: #0a0a0a; font-family: 'Inter', sans-serif; }
+  .lh-root { max-width: 680px; margin: 0 auto; background: #141414; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.4); }
+  .lh-hero { background: #0F1F38; color: #F0EDE8; padding: 2rem 2rem 0; position: relative; overflow: hidden; }
+  .lh-hero::after { content: ''; position: absolute; right: -20px; top: -20px; width: 180px; height: 180px; border-radius: 50%; background: #FF6B2B; opacity: 0.08; }
+  .lh-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #FF6B2B; margin: 0 0 0.5rem; }
+  .lh-headline { font-family: 'Bebas Neue', sans-serif; font-size: 52px; line-height: 1; color: #F0EDE8; margin: 0 0 0.75rem; letter-spacing: 0.02em; }
+  .lh-headline span { color: #FF6B2B; }
+  .lh-mission { font-size: 14px; line-height: 1.6; color: #9BAFC7; max-width: 480px; margin: 0 0 1.25rem; border-left: 2px solid #FF6B2B; padding-left: 0.75rem; }
+  .lh-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #1A3050; border-top: 1px solid #1A3050; }
+  .lh-stat { background: #0F1F38; padding: 0.75rem 1rem; text-align: center; }
+  .lh-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: 28px; color: #FF6B2B; line-height: 1; display: block; }
+  .lh-stat-label { font-size: 10px; color: #6B85A0; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-top: 2px; }
+  .lh-body { padding: 0 1.5rem 1.5rem; background: #141414; }
+  .lh-section { margin-top: 1.5rem; }
+  .lh-section-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem; padding-bottom: 0.5rem; border-bottom: 1px solid #2a2a2a; }
+  .lh-section-dot { width: 8px; height: 8px; border-radius: 50%; background: #FF6B2B; flex-shrink: 0; }
+  .lh-section-title { font-family: 'Bebas Neue', sans-serif; font-size: 18px; letter-spacing: 0.05em; color: #f0ede8; margin: 0; }
+  .lh-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .lh-card { background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 8px; padding: 0.875rem 1rem; }
+  .lh-card-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #FF6B2B; margin: 0 0 0.4rem; }
+  .lh-card-items { list-style: none; margin: 0; padding: 0; }
+  .lh-card-items li { font-size: 12.5px; color: #9bafc7; padding: 3px 0; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+  .lh-card-items li::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: #3a3a3a; flex-shrink: 0; margin-top: 5px; }
+  .lh-diet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; margin-bottom: 0.75rem; }
+  .lh-diet-card { background: #1e1e1e; border: 1px solid #2a2a2a; border-radius: 8px; padding: 0.75rem; text-align: center; }
+  .lh-diet-num { font-family: 'Bebas Neue', sans-serif; font-size: 26px; color: #FF6B2B; line-height: 1; display: block; }
+  .lh-diet-label { font-size: 10px; color: #6b85a0; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-top: 2px; }
+  .lh-sub-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: #6b85a0; margin: 0.75rem 0 0.35rem; }
+  .lh-anchor-row { display: flex; justify-content: space-between; align-items: center; padding: 5px 0; font-size: 12px; border-bottom: 1px solid #2a2a2a; }
+  .lh-anchor-row:last-child { border-bottom: none; }
+  .lh-anchor-meal { color: #9bafc7; flex: 1; }
+  .lh-anchor-macro { color: #f0ede8; font-weight: 500; font-size: 11px; white-space: nowrap; }
+  .badge { font-size: 10px; border-radius: 4px; padding: 1px 6px; margin-left: 5px; }
+  .badge-green { background: #173404; color: #97c459; }
+  .badge-warn { background: #412402; color: #ef9f27; }
+  .badge-orange { background: rgba(255,107,43,0.15); color: #FF6B2B; }
+  .lh-total-row { background: #1a1a1a; margin: 0.4rem -1rem -0.875rem; padding: 0.4rem 1rem; border-radius: 0 0 8px 8px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .lh-total-label { font-weight: 500; color: #f0ede8; }
+  .lh-total-macro { color: #FF6B2B; font-weight: 600; font-size: 11px; }
+  .lh-dinner-card { background: #1e1e1e; border: 1px solid #2a2a2a; border-left: 3px solid #FF6B2B; border-radius: 8px; padding: 0.75rem 1rem; }
+  .lh-dinner-big { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: #FF6B2B; line-height: 1; }
+  .lh-dinner-sub { font-size: 12px; color: #9bafc7; margin-top: 0.25rem; line-height: 1.5; }
+  .lh-dinner-sub strong { color: #f0ede8; }
+  .lh-timeline { position: relative; margin-top: 0.5rem; }
+  .lh-timeline-line { position: absolute; left: 14px; top: 8px; bottom: 8px; width: 2px; background: #2a2a2a; }
+  .lh-milestone { display: flex; gap: 0.75rem; padding: 0.35rem 0; position: relative; }
+  .lh-milestone-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #FF6B2B; background: #141414; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: #FF6B2B; position: relative; z-index: 1; }
+  .lh-milestone-content { flex: 1; padding-top: 3px; padding-bottom: 3px; }
+  .lh-milestone-month { font-size: 11px; font-weight: 600; color: #6b85a0; text-transform: uppercase; letter-spacing: 0.08em; }
+  .lh-milestone-body { font-size: 12px; color: #9bafc7; line-height: 1.4; margin-top: 1px; }
+  .lh-milestone-tag { display: inline-block; font-size: 10px; font-weight: 600; padding: 1px 7px; border-radius: 4px; margin-top: 2px; background: #1e1e1e; color: #6b85a0; border: 1px solid #2a2a2a; }
+  .lh-rules { background: #0F1F38; border-radius: 8px; padding: 1rem 1.25rem; margin-top: 0.75rem; }
+  .lh-rules-title { font-family: 'Bebas Neue', sans-serif; font-size: 14px; letter-spacing: 0.1em; color: #FF6B2B; margin: 0 0 0.5rem; }
+  .lh-rules-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 4px 1rem; }
+  .lh-rules-list li { font-size: 11.5px; color: #9BAFC7; display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+  .lh-rules-list li::before { content: '—'; color: #FF6B2B; flex-shrink: 0; font-size: 11px; }
+  .lh-footer { text-align: center; padding: 0.75rem 0 0.25rem; font-size: 10px; color: #6b85a0; letter-spacing: 0.05em; text-transform: uppercase; }
+  @media (max-width: 480px) {
+    .lh-two-col { grid-template-columns: 1fr; }
+    .lh-rules-list { grid-template-columns: 1fr; }
+    .lh-stats { grid-template-columns: repeat(2, 1fr); }
+    .lh-headline { font-size: 38px; }
+  }
+</style>
+</head>
+<body>
+<div class="lh-root">
+  <div class="lh-hero">
+    <p class="lh-eyebrow">Personal fitness lighthouse · 2025–2026</p>
+    <h1 class="lh-headline">Genuinely fit<br>in <span>12 months</span></h1>
+    <p class="lh-mission">This is the cycle that sticks. The training did its job last time. The diet is the new variable.</p>
+    <div class="lh-stats">
+      <div class="lh-stat"><span class="lh-stat-num">235</span><span class="lh-stat-label">Start lbs</span></div>
+      <div class="lh-stat"><span class="lh-stat-num">25%</span><span class="lh-stat-label">Start body fat</span></div>
+      <div class="lh-stat"><span class="lh-stat-num">195</span><span class="lh-stat-label">Target lbs</span></div>
+      <div class="lh-stat"><span class="lh-stat-num">15%</span><span class="lh-stat-label">Target body fat</span></div>
+    </div>
+  </div>
+
+  <div class="lh-body">
+
+    <div class="lh-section">
+      <div class="lh-section-header">
+        <div class="lh-section-dot"></div>
+        <h2 class="lh-section-title">Training plan</h2>
+      </div>
+      <div class="lh-two-col">
+        <div class="lh-card">
+          <p class="lh-card-label">Lifting · 3x week</p>
+          <ul class="lh-card-items">
+            <li>Full body, Mon / Wed / Sat</li>
+            <li>Block 1 (wks 1–4): straight sets, 5 moves/day</li>
+            <li>Block 2 (wks 5–9): supersets, full arm/delt block</li>
+            <li>Block 3 (wk 10+): built from real data</li>
+            <li>Leave 3–4 reps in tank every set</li>
+            <li>Start at 60% of remembered loads</li>
+          </ul>
+        </div>
+        <div class="lh-card">
+          <p class="lh-card-label">Swimming · 4x week</p>
+          <ul class="lh-card-items">
+            <li>Tue / Thu / Fri + one weekend day</li>
+            <li>Week 1: 100m sets, 500m total</li>
+            <li>Month 2: 150m sets, 600m total</li>
+            <li>Month 4–6: 1km continuous target</li>
+            <li>Year 1 north star: 1.5km in 45 min</li>
+            <li>Lift first on double session days</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="lh-section">
+      <div class="lh-section-header">
+        <div class="lh-section-dot"></div>
+        <h2 class="lh-section-title">Diet plan</h2>
+      </div>
+
+      <div class="lh-diet-grid">
+        <div class="lh-diet-card"><span class="lh-diet-num">1800</span><span class="lh-diet-label">Calories / day</span></div>
+        <div class="lh-diet-card"><span class="lh-diet-num">180g</span><span class="lh-diet-label">Protein / day</span></div>
+      </div>
+
+      <p class="lh-sub-label">Breakfast</p>
+      <div class="lh-card">
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Body Fortress shake (1 scoop, water)</span>
+          <span class="lh-anchor-macro">180 cal · 30g protein</span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Friendly Farms nonfat Greek yogurt (1/3 tub)</span>
+          <span class="lh-anchor-macro">~100 cal · 18g protein</span>
+        </div>
+        <div class="lh-total-row">
+          <span class="lh-total-label">Breakfast total</span>
+          <span class="lh-total-macro">~280 cal · 48g protein</span>
+        </div>
+      </div>
+
+      <p class="lh-sub-label">Pre-workout (training days only — pick one)</p>
+      <div class="lh-card">
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Aldi protein bar <span class="badge badge-green">best</span></span>
+          <span class="lh-anchor-macro">170 cal · 15g protein · 11g net carbs</span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Banana</span>
+          <span class="lh-anchor-macro">~100 cal · 1g protein · 27g carbs</span>
+        </div>
+      </div>
+
+      <p class="lh-sub-label">Lunch — pick one</p>
+      <div class="lh-card">
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Canned tuna (5oz) <span class="badge badge-green">best</span></span>
+          <span class="lh-anchor-macro">~130 cal · 30g protein</span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Artichoke stuffed chicken (half pkg) <span class="badge badge-green">best</span></span>
+          <span class="lh-anchor-macro">~210 cal · 28g protein</span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Broccoli stuffed chicken (half pkg)</span>
+          <span class="lh-anchor-macro">~190 cal · 27g protein</span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">3 eggs + slice cheddar</span>
+          <span class="lh-anchor-macro">~300 cal · 23g protein</span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Pulled chicken BBQ (half pkg)</span>
+          <span class="lh-anchor-macro">~230 cal · 22g protein <span class="badge badge-warn">high carb</span></span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Chicken fajitas (half pkg)</span>
+          <span class="lh-anchor-macro">~150 cal · 18g protein <span class="badge badge-warn">small</span></span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">Sliced beef brisket (half pkg)</span>
+          <span class="lh-anchor-macro">~205 cal · 18g protein</span>
+        </div>
+        <div class="lh-anchor-row">
+          <span class="lh-anchor-meal">McDonald's double QP, no bun + cheese <span class="badge badge-orange">emergency</span></span>
+          <span class="lh-anchor-macro">560 cal · 42g protein · 40g fat</span>
+        </div>
+      </div>
+
+      <p class="lh-sub-label">Dinner</p>
+      <div class="lh-dinner-card">
+        <div class="lh-dinner-big">~870–1040 cal remaining</div>
+        <div class="lh-dinner-sub">
+          After breakfast + bar + a typical lunch + evening shake, you have roughly this left.<br>
+          Anchor dinner around a protein — 6–8oz chicken, ground beef, fish, or whatever Phoebe is cooking. Aim for 40–55g protein. Fill the rest of the plate with vegetables.<br><br>
+          <strong>Evening shake (180 cal · 30g protein)</strong> — take this after dinner every night.
+        </div>
+      </div>
+    </div>
+
+    <div class="lh-section">
+      <div class="lh-section-header">
+        <div class="lh-section-dot"></div>
+        <h2 class="lh-section-title">Month-by-month roadmap</h2>
+      </div>
+      <div class="lh-timeline">
+        <div class="lh-timeline-line"></div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">1</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 1 — Foundation</div>
+            <div class="lh-milestone-body">Scale flat or slightly up from creatine. Arms slightly fuller. Sleep and energy improve before the mirror does. The win is still going.</div>
+            <span class="lh-milestone-tag">~232 lbs · habit forming</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">2</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 2 — First changes</div>
+            <div class="lh-milestone-body">Face leaner. 4–6 lbs of fat gone. Arms visibly better. People who see you daily won't notice yet — you will.</div>
+            <span class="lh-milestone-tag">~228 lbs</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">3</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 3 — Turning point</div>
+            <div class="lh-milestone-body">10–12 lbs gone. Clothes feel different. People who haven't seen you notice. Swimming hits 600–700m. Block 2 supersets begin.</div>
+            <span class="lh-milestone-tag">~223 lbs</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">4</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 4 — Visible</div>
+            <div class="lh-milestone-body">15 lbs gone. Arms look the way you remembered. Shirts tighter in the shoulders, looser in the gut. Last time you had arms but not fat loss. This time both.</div>
+            <span class="lh-milestone-tag">~220 lbs</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">5</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 5 — Groove</div>
+            <div class="lh-milestone-body">The quiet month. Nothing dramatic but everything consolidates. The routine is automatic. Diet feels like habit, not discipline.</div>
+            <span class="lh-milestone-tag">~217 lbs</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">6</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 6 — Halfway</div>
+            <div class="lh-milestone-body">20–22 lbs gone. Swimming at 1km. Visibly different to everyone. The belly that was hanging over the waistband is clearly going somewhere.</div>
+            <span class="lh-milestone-tag">~213 lbs · ~19% BF</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">7</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 7 — Athletic</div>
+            <div class="lh-milestone-body">Starting to feel genuinely athletic, not just fit. Swimming is getting strong. People ask what you're doing.</div>
+            <span class="lh-milestone-tag">~210 lbs</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">8</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 8 — The new normal</div>
+            <div class="lh-milestone-body">28–30 lbs gone. The fitness identity is real, not aspirational. Clothes shopping is different. The midsection is retreating.</div>
+            <span class="lh-milestone-tag">~206 lbs</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">9</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 9 — Block 3</div>
+            <div class="lh-milestone-body">Body has adapted. Build Block 3 from real data — more volume, a strength phase, or a different structure. Earned, not assumed.</div>
+            <span class="lh-milestone-tag">~203 lbs · ~17% BF</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">10</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 10 — Strength</div>
+            <div class="lh-milestone-body">33–35 lbs gone. The belly that was hanging over your pants — gone. Lifts that felt impossible on day one are working sets. You move differently.</div>
+            <span class="lh-milestone-tag">~200 lbs</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">11</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 11 — Refinement</div>
+            <div class="lh-milestone-body">Every pound coming off reveals more of the frame underneath. Super lean is within reach. Year two starts to look real, not like a fantasy.</div>
+            <span class="lh-milestone-tag">~197 lbs · ~16% BF</span>
+          </div>
+        </div>
+
+        <div class="lh-milestone">
+          <div class="lh-milestone-dot">12</div>
+          <div class="lh-milestone-content">
+            <div class="lh-milestone-month">Month 12 — Genuinely fit</div>
+            <div class="lh-milestone-body">35–40 lbs gone. 1.5km swim in range. Arms that make people ask. A different person than the beach photo. The foundation for year two is built.</div>
+            <span class="lh-milestone-tag">~195 lbs · ~15% BF</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="lh-section">
+      <div class="lh-section-header">
+        <div class="lh-section-dot"></div>
+        <h2 class="lh-section-title">The rules that make it stick</h2>
+      </div>
+      <div class="lh-rules">
+        <p class="lh-rules-title">When Wednesday night is hard, read this</p>
+        <ul class="lh-rules-list">
+          <li>The training did its job last time. The diet is the variable.</li>
+          <li>A bad week doesn't end the cycle. One session does.</li>
+          <li>Feeling good in week 2 is the trap. Move to Block 2 on the calendar.</li>
+          <li>The belly goes last. Everything else improves first.</li>
+          <li>Don't track everything — track the wins that feel good.</li>
+          <li>30-min swim still counts. Something beats nothing every time.</li>
+          <li>Late nights during the window are planned, not failure.</li>
+          <li>Genuinely fit in 12 months. Super lean is year two.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lh-footer">Patrick Neve · Fitness Lighthouse · June 2025 </div>
+  </div>
+</div>
+</body>
+</html>
