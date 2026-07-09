@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  html,body{margin:0;background:#0a0a0a;font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  a{color:#FF6B2B;} a:hover{color:#ff8654;}
+  input[type=number]{-moz-appearance:textfield;}
+  input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none;margin:0;}
+  ::-webkit-scrollbar{width:0;height:0;}
+</style>
+</helmet>
+
+<template id="__bundler_thumbnail" data-bg-color="#0F1F38">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#0F1F38"></rect>
+    <circle cx="1000" cy="140" r="180" fill="#FF6B2B" opacity="0.12"></circle>
+    <circle cx="600" cy="300" r="18" fill="#FF6B2B"></circle>
+    <text x="600" y="470" font-family="Arial, sans-serif" font-size="120" font-weight="700" fill="#F0EDE8" text-anchor="middle">30 &amp; LEAN</text>
+    <text x="600" y="545" font-family="Arial, sans-serif" font-size="34" letter-spacing="6" fill="#FF6B2B" text-anchor="middle">THE LIGHTHOUSE</text>
+  </svg>
+</template>
+
+<div style="min-height:100vh;background:#0a0a0a;">
+<div style="max-width:440px;margin:0 auto;background:#141414;min-height:100vh;position:relative;padding-bottom:78px;overflow:hidden;">
+
+  <!-- HEADER -->
+  <div style="position:sticky;top:0;z-index:20;background:#0F1F38;border-bottom:1px solid #1A3050;padding:0.8rem 1.15rem;display:flex;align-items:center;justify-content:space-between;">
+    <div style="display:flex;align-items:center;gap:0.5rem;">
+      <div style="width:9px;height:9px;border-radius:50%;background:#FF6B2B;flex-shrink:0;"></div>
+      <span style="font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:0.06em;color:#F0EDE8;">THE LIGHTHOUSE</span>
+    </div>
+    <span style="font-size:12px;color:#9BAFC7;font-weight:500;">{{ weight }}<span style="color:#6b85a0;font-weight:400;"> lb</span></span>
+  </div>
+
+  <div style="padding:1.15rem 1.15rem 0;">
+
+  <!-- ================= HOME ================= -->
+  <sc-if value="{{ isHome }}">
+    <div style="margin-bottom:1rem;">
+      <div style="font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:#FF6B2B;margin-bottom:0.35rem;">Front of mind</div>
+      <h1 style="font-family:'Bebas Neue',sans-serif;font-size:30px;line-height:1.05;color:#F0EDE8;margin:0;letter-spacing:0.02em;">Race ready. <span style="color: rgb(255, 107, 43);">30 and lean.</span></h1>
+    </div>
+
+    <!-- progress card -->
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:12px;padding:1.1rem 1.15rem;margin-bottom:0.85rem;">
+      <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0.85rem;">
+        <div>
+          <div style="font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin-bottom:3px;">Current weight · tap to log</div>
+          <div style="display:flex;align-items:baseline;gap:6px;">
+            <input type="number" defaultValue="{{ weight }}" onInput="{{ setWeight }}" style="width:96px;font-family:'Bebas Neue',sans-serif;font-size:46px;color:#F0EDE8;background:transparent;border:none;border-bottom:2px solid #33404f;padding:0 2px;line-height:1;outline:none;">
+            <span style="font-size:14px;color:#6b85a0;">lb</span>
+          </div>
+        </div>
+        <div style="text-align:right;">
+          <div style="font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin-bottom:3px;">Goal</div>
+          <div style="font-family:'Bebas Neue',sans-serif;font-size:30px;color:#FF6B2B;line-height:1;">{{ goalWeight }}</div>
+        </div>
+      </div>
+      <div style="height:14px;background:#0F1F38;border-radius:999px;overflow:hidden;">
+        <div style="{{ weightFill }}"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:9px;font-size:11.5px;color:#9BAFC7;">
+        <span><b style="color:#F0EDE8;">{{ lost }} lb</b> down from {{ startWeight }}</span>
+        <span><b style="color:#F0EDE8;">{{ toGo }} lb</b> to go</span>
+      </div>
+    </div>
+
+    <!-- conditioning benchmarks -->
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:12px;padding:1.1rem 1.15rem;margin-bottom:0.85rem;">
+      <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#FF6B2B;margin:0 0 0.9rem;">Conditioning benchmarks</p>
+      <div style="display:flex;flex-direction:column;gap:0.95rem;">
+        <sc-for list="{{ conditioningView }}" as="c" hint-placeholder-count="6">
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;">
+              <span style="font-size:12.5px;color:#F0EDE8;font-weight:500;">{{ c.label }}</span>
+              <span style="font-size:11px;color:#6b85a0;">{{ c.targetLabel }}</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.6rem;">
+              <input type="number" step="any" defaultValue="{{ c.value }}" onInput="{{ c.set }}" style="width:66px;background:#0F1F38;border:1px solid #2a2a2a;border-radius:6px;color:#F0EDE8;font-size:15px;padding:6px 8px;outline:none;text-align:center;">
+              <div style="flex:1;height:12px;background:#0F1F38;border-radius:999px;overflow:hidden;"><div style="{{ c.fill }}"></div></div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <!-- countdown -->
+    <div style="background:#0F1F38;border:1px solid #1A3050;border-radius:12px;padding:0.9rem 1.15rem;margin-bottom:0.85rem;display:flex;align-items:center;justify-content:space-between;">
+      <div>
+        <div style="font-size:10.5px;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin-bottom:2px;">Next race</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:23px;color:#F0EDE8;letter-spacing:0.02em;line-height:1;">{{ nextRaceName }}</div>
+        <div style="font-size:11.5px;color:#9BAFC7;margin-top:3px;">{{ nextRaceDateLabel }}</div>
+      </div>
+      <div style="text-align:right;flex-shrink:0;padding-left:0.75rem;">
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:42px;color:#FF6B2B;line-height:0.85;">{{ daysToRace }}</div>
+        <div style="font-size:10px;text-transform:uppercase;letter-spacing:0.08em;color:#6b85a0;">days out</div>
+      </div>
+    </div>
+
+    <!-- race calendar -->
+    <div style="font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:1.1rem 0 0.5rem;">Race calendar</div>
+    <div style="display:flex;flex-direction:column;gap:0.55rem;margin-bottom:0.85rem;">
+      <sc-for list="{{ racesView }}" as="r" hint-placeholder-count="4">
+        <div style="{{ r.card }}">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:0.5rem;">
+            <p style="font-family:'Bebas Neue',sans-serif;font-size:19px;color:#F0EDE8;margin:0;letter-spacing:0.02em;">{{ r.name }}</p>
+            <p style="font-size:10.5px;font-weight:600;color:#FF6B2B;text-transform:uppercase;letter-spacing:0.06em;margin:0;white-space:nowrap;">{{ r.label }}</p>
+          </div>
+          <p style="font-size:11.5px;color:#6b85a0;margin:2px 0 0.4rem;">{{ r.place }}</p>
+          <p style="font-size:12.5px;color:#9BAFC7;line-height:1.45;margin:0;">{{ r.note }}</p>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- rules -->
+    <div style="background:#0F1F38;border-radius:12px;padding:1.15rem 1.25rem;margin-bottom:0.4rem;">
+      <p style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:0.05em;color:#FF6B2B;margin:0 0 0.85rem;">When Wednesday Night Is Hard, Read This</p>
+      <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;">
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>The training did its job last time. The fork is the variable.</li>
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>A bad week doesn't end the cycle. One session does.</li>
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>Feeling good in week 2 is the trap. Move to Block 2 on the calendar.</li>
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>The belly goes last. Everything else improves first.</li>
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>Don't track everything — track the chest press number.</li>
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>A 30-min swim still counts. Something beats nothing every time.</li>
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>Late nights during the window are planned, not failure.</li>
+        <li style="font-size:13px;color:#9BAFC7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>Genuinely fit in 12 months. Race ready in 18. Super lean is year two.</li>
+      </ul>
+    </div>
+  </sc-if>
+
+  <!-- ================= DIET ================= -->
+  <sc-if value="{{ isDiet }}">
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#FF6B2B;"></div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.04em;color:#F0EDE8;margin:0;">Diet Plan</h2>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:0.7rem;margin-bottom:1rem;">
+      <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:1rem;text-align:center;">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:34px;color:#FF6B2B;line-height:1;display:block;">1800</span>
+        <span style="font-size:11px;color:#6b85a0;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-top:3px;">Calories / day</span>
+      </div>
+      <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:1rem;text-align:center;">
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:34px;color:#FF6B2B;line-height:1;display:block;">180g</span>
+        <span style="font-size:11px;color:#6b85a0;text-transform:uppercase;letter-spacing:0.08em;display:block;margin-top:3px;">Protein / day</span>
+      </div>
+    </div>
+
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:1rem 0 0.4rem;">Breakfast</p>
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.9rem 1.1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;border-bottom:1px solid #2a2a2a;gap:1rem;">
+        <span style="color:#9bafc7;flex:1;">Body Fortress shake (1 scoop, water)</span>
+        <span style="color:#f0ede8;font-weight:500;font-size:11.5px;white-space:nowrap;">180 cal · 30g pro</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;gap:1rem;">
+        <span style="color:#9bafc7;flex:1;">Nonfat Greek yogurt (⅓–½ tub)</span>
+        <span style="color:#f0ede8;font-weight:500;font-size:11.5px;white-space:nowrap;">100–150 cal · 18–27g pro</span>
+      </div>
+      <div style="background:#161616;margin:0.5rem -1.1rem -0.9rem;padding:0.55rem 1.1rem;border-radius:0 0 8px 8px;display:flex;justify-content:space-between;align-items:center;font-size:13px;">
+        <span style="font-weight:500;color:#f0ede8;">Breakfast total</span>
+        <span style="color:#FF6B2B;font-weight:600;font-size:11.5px;">~280–330 cal · 48–57g pro</span>
+      </div>
+    </div>
+
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:1rem 0 0.4rem;">Pre-workout — training days, pick one</p>
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.9rem 1.1rem;">
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;border-bottom:1px solid #2a2a2a;gap:1rem;">
+        <span style="color:#9bafc7;flex:1;">Aldi protein bar <span style="font-size:10px;border-radius:4px;padding:2px 7px;margin-left:5px;background:#173404;color:#97c459;">BEST</span></span>
+        <span style="color:#f0ede8;font-weight:500;font-size:11.5px;white-space:nowrap;">170 cal · 15g pro</span>
+      </div>
+      <div style="display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px;gap:1rem;">
+        <span style="color:#9bafc7;flex:1;">Banana</span>
+        <span style="color:#f0ede8;font-weight:500;font-size:11.5px;white-space:nowrap;">~100 cal · 1g pro</span>
+      </div>
+    </div>
+
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:1rem 0 0.4rem;">Lunch — pick one</p>
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.9rem 1.1rem;">
+      <sc-for list="{{ lunches }}" as="l" hint-placeholder-count="8">
+        <div style="{{ l.row }}">
+          <span style="color:#9bafc7;flex:1;">{{ l.name }}<span style="{{ l.tagStyle }}">{{ l.tag }}</span></span>
+          <span style="color:#f0ede8;font-weight:500;font-size:11.5px;white-space:nowrap;">{{ l.macros }}</span>
+        </div>
+      </sc-for>
+    </div>
+
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:1rem 0 0.4rem;">Dinner</p>
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-left:3px solid #FF6B2B;border-radius:8px;padding:0.9rem 1.1rem;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:#FF6B2B;line-height:1;">~870–1,040 cal remaining</div>
+      <div style="font-size:13px;color:#9bafc7;margin-top:0.5rem;line-height:1.55;">
+        Anchor around 6–8oz protein. Fill the plate with vegetables. Whatever Phoebe is cooking — just control the plate ratio.<br><br>
+        <strong style="color:#f0ede8;">Evening shake (180 cal · 30g protein)</strong> — every night without exception.
+      </div>
+    </div>
+  </sc-if>
+
+  <!-- ================= WORKOUT ================= -->
+  <sc-if value="{{ isWorkout }}">
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#FF6B2B;"></div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.04em;color:#F0EDE8;margin:0;">Workout Plan</h2>
+    </div>
+
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:0 0 0.5rem;">Weekly quota · Sunday always off</p>
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:1.4rem;">
+      <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.7rem 0.2rem;text-align:center;"><div style="font-family:'Bebas Neue',sans-serif;font-size:23px;color:#FF6B2B;line-height:1;">3×</div><div style="font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;color:#6b85a0;margin-top:4px;">Lift</div></div>
+      <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.7rem 0.2rem;text-align:center;"><div style="font-family:'Bebas Neue',sans-serif;font-size:23px;color:#FF6B2B;line-height:1;">2–4×</div><div style="font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;color:#6b85a0;margin-top:4px;">Swim</div></div>
+      <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.7rem 0.2rem;text-align:center;"><div style="font-family:'Bebas Neue',sans-serif;font-size:23px;color:#FF6B2B;line-height:1;">2×</div><div style="font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;color:#6b85a0;margin-top:4px;">Run</div></div>
+      <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.7rem 0.2rem;text-align:center;"><div style="font-family:'Bebas Neue',sans-serif;font-size:23px;color:#FF6B2B;line-height:1;">2×</div><div style="font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;color:#6b85a0;margin-top:4px;">Bike</div></div>
+      <div style="background:#161616;border:1px solid #2a2a2a;border-radius:8px;padding:0.7rem 0.2rem;text-align:center;"><div style="font-family:'Bebas Neue',sans-serif;font-size:23px;color:#6b85a0;line-height:1;">1×</div><div style="font-size:9.5px;text-transform:uppercase;letter-spacing:0.05em;color:#6b85a0;margin-top:4px;">Rest</div></div>
+    </div>
+
+    <!-- baseline (collapsible) -->
+    <div onClick="{{ toggleBaseline }}" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.5rem;">
+      <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#F0EDE8;">Current baseline · no retesting</span>
+      <span style="{{ chevBaseline }}">⌄</span>
+    </div>
+    <sc-if value="{{ openBaseline }}">
+      <div style="background:#161616;border:1px solid #2a2a2a;border-radius:8px;padding:0.2rem 1rem;margin:-0.3rem 0 1.4rem;">
+        <sc-for list="{{ baseline }}" as="x" hint-placeholder-count="5">
+          <div style="display:flex;justify-content:space-between;gap:0.9rem;padding:0.55rem 0;border-bottom:1px solid #242424;">
+            <div style="flex:1;"><div style="font-size:12.5px;color:#F0EDE8;font-weight:600;">{{ x.k }}</div><div style="font-size:11px;color:#6b85a0;line-height:1.4;">{{ x.u }}</div></div>
+            <div style="font-size:12px;color:#9bafc7;text-align:right;align-self:center;">{{ x.v }}</div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <!-- phase overview -->
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:0 0 0.5rem;">Phase overview · 37 weeks</p>
+    <div style="display:flex;flex-direction:column;gap:0.4rem;margin-bottom:1.4rem;">
+      <sc-for list="{{ phasesOverview }}" as="p" hint-placeholder-count="7">
+        <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.7rem 0.9rem;display:flex;gap:0.85rem;align-items:flex-start;">
+          <div style="text-align:center;flex-shrink:0;min-width:46px;"><div style="font-family:'Bebas Neue',sans-serif;font-size:17px;color:#FF6B2B;line-height:1;">{{ p.weeks }}</div><div style="font-size:9px;color:#6b85a0;text-transform:uppercase;letter-spacing:0.05em;margin-top:3px;">weeks</div></div>
+          <div style="flex:1;"><div style="font-size:13px;color:#F0EDE8;font-weight:600;">{{ p.name }}</div><div style="font-size:11.5px;color:#9bafc7;line-height:1.4;margin-top:2px;">{{ p.focus }}</div></div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- weekly sessions by phase (the detailed plan) -->
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:0 0 0.5rem;">Weekly sessions by phase · tap to open</p>
+    <div style="display:flex;flex-direction:column;gap:0.5rem;margin-bottom:1.4rem;">
+      <sc-for list="{{ sessionPhasesView }}" as="p" hint-placeholder-count="7">
+        <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;overflow:hidden;">
+          <div onClick="{{ p.toggle }}" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:0.8rem 1rem;">
+            <div><div style="font-size:13px;color:#F0EDE8;font-weight:600;">{{ p.name }}</div><div style="font-size:10px;color:#6b85a0;text-transform:uppercase;letter-spacing:0.05em;margin-top:1px;">{{ p.weeks }}</div></div>
+            <span style="{{ p.chev }}">⌄</span>
+          </div>
+          <sc-if value="{{ p.open }}">
+            <div style="padding:0 1rem 0.9rem;">
+              <sc-for list="{{ p.sessions }}" as="sx" hint-placeholder-count="4">
+                <div style="display:flex;gap:0.7rem;padding:0.5rem 0;border-top:1px solid #242424;">
+                  <span style="font-size:12px;font-weight:700;color:#FF6B2B;min-width:62px;flex-shrink:0;">{{ sx.d }}</span>
+                  <span style="font-size:12.5px;color:#9bafc7;line-height:1.45;">{{ sx.t }}</span>
+                </div>
+              </sc-for>
+              <div style="font-size:12px;color:#6b85a0;line-height:1.5;margin-top:0.6rem;padding-top:0.6rem;border-top:1px solid #242424;"><span style="color:#FF6B2B;font-weight:600;">Spacing:</span> {{ p.spacing }}</div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- full 37-week schedule (collapsible) -->
+    <div onClick="{{ toggleWeeks }}" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.5rem;">
+      <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#F0EDE8;">Full 37-week schedule</span>
+      <span style="{{ chevWeeks }}">⌄</span>
+    </div>
+    <sc-if value="{{ openWeeks }}">
+      <div style="margin:-0.3rem 0 0.4rem;">
+        <div style="overflow:auto;border:1px solid #2a2a2a;border-radius:8px;max-height:440px;">
+          <table style="width:100%;border-collapse:collapse;font-size:11.5px;min-width:540px;">
+            <thead><tr style="background:#1a1a1a;">
+              <td style="padding:0.55rem 0.6rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;position:sticky;top:0;background:#1a1a1a;">Wk</td>
+              <td style="padding:0.55rem 0.6rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;position:sticky;top:0;background:#1a1a1a;">Dates</td>
+              <td style="padding:0.55rem 0.6rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;position:sticky;top:0;background:#1a1a1a;">Phase</td>
+              <td style="padding:0.55rem 0.6rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;position:sticky;top:0;background:#1a1a1a;">L/S/B/R</td>
+              <td style="padding:0.55rem 0.6rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;position:sticky;top:0;background:#1a1a1a;">Focus</td>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{ weeks37View }}" as="w" hint-placeholder-count="12">
+                <tr style="{{ w.rowStyle }}">
+                  <td style="padding:0.5rem 0.6rem;color:#FF6B2B;font-weight:700;white-space:nowrap;">{{ w.wk }}</td>
+                  <td style="padding:0.5rem 0.6rem;color:#9bafc7;white-space:nowrap;">{{ w.dates }}</td>
+                  <td style="padding:0.5rem 0.6rem;color:#f0ede8;white-space:nowrap;">{{ w.phase }}</td>
+                  <td style="padding:0.5rem 0.6rem;color:#9bafc7;white-space:nowrap;">{{ w.q }}</td>
+                  <td style="padding:0.5rem 0.6rem;color:#6b85a0;line-height:1.35;min-width:190px;">{{ w.focus }}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <p style="font-size:10.5px;color:#6b85a0;margin:0.5rem 0 1.4rem;">Orange rows are down weeks (6, 10, 15, 19, 24, 28, 33). Counts are Lift / Swim / Bike / Run.</p>
+      </div>
+    </sc-if>
+
+    <!-- key session menu (collapsible) -->
+    <div onClick="{{ toggleMenu }}" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.5rem;">
+      <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#F0EDE8;">Key session menu · RPE guide</span>
+      <span style="{{ chevMenu }}">⌄</span>
+    </div>
+    <sc-if value="{{ openMenu }}">
+      <div style="margin:-0.3rem 0 1.4rem;">
+        <sc-for list="{{ sessionMenu }}" as="g" hint-placeholder-count="5">
+          <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.8rem 1rem;margin-bottom:0.5rem;">
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;color:#FF6B2B;letter-spacing:0.03em;margin-bottom:0.25rem;">{{ g.group }}</div>
+            <sc-for list="{{ g.items }}" as="it" hint-placeholder-count="4">
+              <div style="padding:0.4rem 0;border-top:1px solid #242424;font-size:12.5px;line-height:1.45;"><span style="color:#F0EDE8;font-weight:600;">{{ it.n }}</span><span style="color:#9bafc7;"> — {{ it.d }}</span></div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#6b85a0;margin:0 0 0.5rem;">Triathlon targets · 0.25mi swim · 12mi bike · 5K run</p>
+    <div style="overflow-x:auto;border:1px solid #2a2a2a;border-radius:8px;">
+      <table style="width:100%;border-collapse:collapse;font-size:12px;min-width:520px;">
+        <thead>
+          <tr style="background:#1a1a1a;">
+            <td style="padding:0.6rem 0.7rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;">Stage</td>
+            <td style="padding:0.6rem 0.7rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;text-align:center;">Elite</td>
+            <td style="padding:0.6rem 0.7rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;text-align:center;">Comp.</td>
+            <td style="padding:0.6rem 0.7rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;text-align:center;">Avg.</td>
+            <td style="padding:0.6rem 0.7rem;color:#FF6B2B;font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;text-align:center;background:rgba(255,107,43,0.08);">You</td>
+            <td style="padding:0.6rem 0.7rem;color:#6b85a0;font-weight:600;text-transform:uppercase;font-size:10px;letter-spacing:0.05em;text-align:center;">Podium</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-top:1px solid #2a2a2a;"><td style="padding:0.55rem 0.7rem;color:#f0ede8;font-weight:500;">Swim</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">5:00</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">6–8</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">8–12</td><td style="padding:0.55rem 0.7rem;color:#FF6B2B;font-weight:600;text-align:center;background:rgba(255,107,43,0.06);">6–7</td><td style="padding:0.55rem 0.7rem;color:#6b85a0;text-align:center;">—</td></tr>
+          <tr style="border-top:1px solid #2a2a2a;"><td style="padding:0.55rem 0.7rem;color:#f0ede8;font-weight:500;">Bike</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">28–32</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">33–38</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">38–48</td><td style="padding:0.55rem 0.7rem;color:#FF6B2B;font-weight:600;text-align:center;background:rgba(255,107,43,0.06);">38–42</td><td style="padding:0.55rem 0.7rem;color:#6b85a0;text-align:center;">—</td></tr>
+          <tr style="border-top:1px solid #2a2a2a;"><td style="padding:0.55rem 0.7rem;color:#f0ede8;font-weight:500;">Run</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">18–20</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">22–25</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">28–35</td><td style="padding:0.55rem 0.7rem;color:#FF6B2B;font-weight:600;text-align:center;background:rgba(255,107,43,0.06);">26–30</td><td style="padding:0.55rem 0.7rem;color:#6b85a0;text-align:center;">—</td></tr>
+          <tr style="border-top:1px solid #2a2a2a;"><td style="padding:0.55rem 0.7rem;color:#f0ede8;font-weight:500;">T1/T2</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">2:00</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">3:00</td><td style="padding:0.55rem 0.7rem;color:#9bafc7;text-align:center;">4–5</td><td style="padding:0.55rem 0.7rem;color:#FF6B2B;font-weight:600;text-align:center;background:rgba(255,107,43,0.06);">3–4</td><td style="padding:0.55rem 0.7rem;color:#6b85a0;text-align:center;">—</td></tr>
+          <tr style="border-top:1px solid #2a2a2a;background:#1a1a1a;"><td style="padding:0.6rem 0.7rem;color:#f0ede8;font-weight:700;">Total</td><td style="padding:0.6rem 0.7rem;color:#f0ede8;font-weight:600;text-align:center;">53–59</td><td style="padding:0.6rem 0.7rem;color:#f0ede8;font-weight:600;text-align:center;">1:04+</td><td style="padding:0.6rem 0.7rem;color:#f0ede8;font-weight:600;text-align:center;">1:18+</td><td style="padding:0.6rem 0.7rem;color:#FF6B2B;font-weight:700;text-align:center;background:rgba(255,107,43,0.1);">1:13–1:23</td><td style="padding:0.6rem 0.7rem;color:#FF6B2B;font-weight:700;text-align:center;">1:18–1:25</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:11px;color:#6b85a0;margin:0.6rem 0 1.4rem;line-height:1.5;">All times in minutes unless shown as h:mm. Your column is the March 2027 projection.</p>
+
+    <!-- recovery & down weeks (collapsible) -->
+    <div onClick="{{ toggleRecovery }}" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.5rem;">
+      <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#F0EDE8;">Recovery &amp; down weeks</span>
+      <span style="{{ chevRecovery }}">⌄</span>
+    </div>
+    <sc-if value="{{ openRecovery }}">
+      <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.9rem 1rem;margin:-0.3rem 0 1.4rem;">
+        <div style="font-size:12.5px;color:#9bafc7;line-height:1.55;margin-bottom:0.7rem;">A 3:1 / 4:1 loading pattern — down weeks land on <b style="color:#F0EDE8;">weeks 6, 10, 15, 19, 24, 28, 33</b>. Session count stays the same (lifting always 3×); duration and intensity drop 25–35%. They matter more than usual in a deficit — don't skip them.</div>
+        <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#FF6B2B;margin-bottom:0.4rem;">Take extra recovery if you see</div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px;">
+          <sc-for list="{{ recoverySigns }}" as="r" hint-placeholder-count="5">
+            <li style="font-size:12.5px;color:#9bafc7;display:flex;gap:8px;line-height:1.45;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>{{ r }}</li>
+          </sc-for>
+        </ul>
+      </div>
+    </sc-if>
+
+    <!-- how to adjust (collapsible) -->
+    <div onClick="{{ toggleAdjust }}" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;padding:0.85rem 1rem;margin-bottom:0.5rem;">
+      <span style="font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:#F0EDE8;">How to adjust this plan</span>
+      <span style="{{ chevAdjust }}">⌄</span>
+    </div>
+    <sc-if value="{{ openAdjust }}">
+      <ul style="list-style:none;margin:-0.3rem 0 0.4rem;padding:0.9rem 1rem;background:#1e1e1e;border:1px solid #2a2a2a;border-radius:8px;display:flex;flex-direction:column;gap:9px;">
+        <sc-for list="{{ adjustNotes }}" as="a" hint-placeholder-count="5">
+          <li style="font-size:12.5px;color:#9bafc7;display:flex;gap:8px;line-height:1.5;"><span style="color:#FF6B2B;flex-shrink:0;">—</span>{{ a }}</li>
+        </sc-for>
+      </ul>
+    </sc-if>
+  </sc-if>
+
+  <!-- ================= ROADMAP ================= -->
+  <sc-if value="{{ isRoadmap }}">
+    <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:1rem;">
+      <div style="width:8px;height:8px;border-radius:50%;background:#FF6B2B;"></div>
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.04em;color:#F0EDE8;margin:0;">Roadmap</h2>
+    </div>
+
+    <!-- your progress -->
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:12px;padding:1.1rem 1.15rem;margin-bottom:0.85rem;">
+      <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#FF6B2B;margin:0 0 0.9rem;">Your numbers · tap to update</p>
+
+      <div style="margin-bottom:0.95rem;">
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:12.5px;color:#F0EDE8;font-weight:500;">Weight</span><span style="font-size:11px;color:#6b85a0;">{{ startWeight }} → {{ goalWeight }} lb</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <input type="number" defaultValue="{{ weight }}" onInput="{{ setWeight }}" style="width:66px;background:#0F1F38;border:1px solid #2a2a2a;border-radius:6px;color:#F0EDE8;font-size:15px;padding:6px 8px;outline:none;text-align:center;">
+          <div style="flex:1;height:12px;background:#0F1F38;border-radius:999px;overflow:hidden;"><div style="{{ weightFill }}"></div></div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px;"><span style="font-size:12.5px;color:#F0EDE8;font-weight:500;">Body fat</span><span style="font-size:11px;color:#6b85a0;">{{ startBF }}% → {{ goalBF }}%</span></div>
+        <div style="display:flex;align-items:center;gap:0.6rem;">
+          <input type="number" defaultValue="{{ bodyfat }}" onInput="{{ setBF }}" style="width:66px;background:#0F1F38;border:1px solid #2a2a2a;border-radius:6px;color:#F0EDE8;font-size:15px;padding:6px 8px;outline:none;text-align:center;">
+          <div style="flex:1;height:12px;background:#0F1F38;border-radius:999px;overflow:hidden;"><div style="{{ bfFill }}"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- training blocks checklist -->
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:12px;padding:1.1rem 1.15rem;margin-bottom:0.85rem;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.4rem;">
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#FF6B2B;margin:0;">Training blocks</p>
+        <span style="font-size:11px;color:#6b85a0;">{{ blocksDoneCount }}/{{ blocksTotal }} done</span>
+      </div>
+      <div style="height:8px;background:#0F1F38;border-radius:999px;overflow:hidden;margin-bottom:0.5rem;"><div style="{{ blocksFill }}"></div></div>
+      <sc-for list="{{ blocksView }}" as="b" hint-placeholder-count="6">
+        <div onClick="{{ b.toggle }}" style="display:flex;align-items:center;gap:0.7rem;padding:0.5rem 0;cursor:pointer;border-bottom:1px solid #242424;">
+          <div style="{{ b.box }}"><sc-if value="{{ b.done }}">✓</sc-if></div>
+          <div style="flex:1;"><div style="{{ b.title }}">{{ b.label }}</div><div style="font-size:11.5px;color:#6b85a0;line-height:1.4;">{{ b.desc }}</div></div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- month by month -->
+    <div style="background:#1e1e1e;border:1px solid #2a2a2a;border-radius:12px;padding:1.1rem 1.15rem;margin-bottom:0.85rem;">
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:0.4rem;">
+        <p style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.1em;color:#FF6B2B;margin:0;">Month by month · tap to mark done</p>
+        <span style="font-size:11px;color:#6b85a0;">{{ monthsDoneCount }}/{{ monthsTotal }}</span>
+      </div>
+      <div style="height:8px;background:#0F1F38;border-radius:999px;overflow:hidden;margin-bottom:0.6rem;"><div style="{{ monthsFill }}"></div></div>
+      <sc-for list="{{ monthsView }}" as="m" hint-placeholder-count="12">
+        <div onClick="{{ m.toggle }}" style="display:flex;gap:0.7rem;padding:0.6rem 0;cursor:pointer;border-bottom:1px solid #242424;">
+          <div style="{{ m.dot }}">{{ m.n }}</div>
+          <div style="flex:1;">
+            <div style="{{ m.title }}">Month {{ m.n }} — {{ m.name }}</div>
+            <div style="font-size:12.5px;color:#9bafc7;line-height:1.45;margin-top:2px;">{{ m.desc }}</div>
+            <div style="font-size:11.5px;color:#6b85a0;line-height:1.4;margin-top:4px;"><span style="color:#FF6B2B;font-weight:600;">Conditioning:</span> {{ m.cond }}</div>
+            <span style="display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;margin-top:6px;background:#0F1F38;color:#6b85a0;border:1px solid #2a2a2a;">{{ m.tag }}</span>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+
+    <button onClick="{{ reset }}" style="width:100%;background:none;border:1px solid #2a2a2a;color:#6b85a0;font-size:12px;padding:0.6rem;border-radius:8px;cursor:pointer;margin-bottom:0.4rem;">Reset all progress</button>
+  </sc-if>
+
+  </div>
+
+  <!-- ================= BOTTOM NAV ================= -->
+  <div style="position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:100%;max-width:440px;background:#0F1F38;border-top:1px solid #1A3050;display:flex;z-index:30;">
+    <button onClick="{{ goHome }}" style="flex:1;background:none;border:none;padding:0.55rem 0 0.65rem;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ homeIco }}"><path d="M3 11l9-7 9 7"></path><path d="M5 10v10h14V10"></path></svg>
+      <span style="{{ homeLbl }}">Home</span>
+    </button>
+    <button onClick="{{ goDiet }}" style="flex:1;background:none;border:none;padding:0.55rem 0 0.65rem;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ dietIco }}"><path d="M6 3v7a2 2 0 0 0 4 0V3"></path><path d="M8 10v11"></path><path d="M17 3c-2 0-3 2.5-3 5.5S15 13 17 13v8"></path></svg>
+      <span style="{{ dietLbl }}">Diet</span>
+    </button>
+    <button onClick="{{ goWorkout }}" style="flex:1;background:none;border:none;padding:0.55rem 0 0.65rem;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ workIco }}"><path d="M4 9v6M8 6v12M16 6v12M20 9v6M8 12h8"></path></svg>
+      <span style="{{ workLbl }}">Workout</span>
+    </button>
+    <button onClick="{{ goRoadmap }}" style="flex:1;background:none;border:none;padding:0.55rem 0 0.65rem;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="{{ roadIco }}"><path d="M5 3v18"></path><path d="M5 4h11l-2 4 2 4H5"></path></svg>
+      <span style="{{ roadLbl }}">Roadmap</span>
+    </button>
+  </div>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:440,&quot;height&quot;:920},&quot;defaultTab&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;home&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;diet&quot;,&quot;workout&quot;,&quot;roadmap&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Setup&quot;},&quot;startWeight&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:236,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Targets&quot;},&quot;goalWeight&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:189,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Targets&quot;},&quot;goalBodyFat&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:15,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Targets&quot;}}">
+class Component extends DCLogic {
+  KEY = 'lighthouse_app_v1';
+
+  months = [
+    {n:1,name:'Foundation',desc:'Scale flat or up from creatine. Arms slightly fuller. Sleep and energy improve before the mirror does.',cond:'No timed benchmarks yet. Swimming building toward 500m. Easy jog introduced week 4.',tag:'~232 lb · habit forming'},
+    {n:2,name:'First Changes',desc:'Face leaner. 4–6 lb gone. Arms visibly better. People who see you daily won\u2019t notice yet — you will.',cond:'Swimming 600–700m continuous. First easy 1-mile jogs.',tag:'~228 lb'},
+    {n:3,name:'Turning Point',desc:'10–12 lb gone. Clothes feel different. People notice. Running and biking introduced.',cond:'First untimed 5K run (~35–40 min). First easy bike rides on the trainer.',tag:'~223 lb'},
+    {n:4,name:'Visible',desc:'15 lb gone. Arms back. Shirts looser in the gut, tighter in the shoulders. Running 3–5km, biking 10 miles.',cond:'5K around 30–32 min. 10-mile bike around 50–55 min.',tag:'~219 lb'},
+    {n:5,name:'Groove',desc:'The belly that was hanging over your pants — gone. Diet feels like habit. Full triathlon training week begins.',cond:'First brick workout. 5K around 28–30 min. 12-mile bike around 48–50 min.',tag:'~215 lb'},
+    {n:6,name:'Halfway',desc:'22–24 lb gone. Visibly different to everyone. Normal BMI territory approaching. All three disciplines solid.',cond:'Swim 800m–1km continuous. 5K around 27–29 min. 12-mile bike around 44–46 min.',tag:'~211 lb'},
+    {n:7,name:'Athletic',desc:'Genuinely athletic, not just fit. Brick workouts weekly. People who knew you don\u2019t recognize you immediately.',cond:'Swim 1km continuous. 5K around 27 min. 12-mile bike under 44 min.',tag:'~207 lb'},
+    {n:8,name:'The New Normal',desc:'28–30 lb gone. Gym triathlon simulation. Race-specific training. The leanest you\u2019ve been in years.',cond:'Swim 1–1.2km continuous. 5K around 26–27 min. 12-mile bike around 42 min.',tag:'~203 lb'},
+    {n:9,name:'Race Ready',desc:'Both races registered. All three disciplines sharp. Block 3 built from real data. Taper planning begins.',cond:'Gym tri sim — swim 0.25mi ~7 min, bike 12mi ~40–42 min, run 5K ~27–28 min.',tag:'~199 lb'},
+    {n:10,name:'Sharpening',desc:'Swim 1.5km in training. Run sub-28 min 5K. Bike 12 miles under 40 min.',cond:'All at race pace now — swim 1.5km, sub-28 min 5K, 12mi bike under 40 min.',tag:'~195 lb'},
+    {n:11,name:'Race Sharp',desc:'Taper begins for Space Coast. Everything dialed. Confidence is high.',cond:'Holding race pace — swim 6–7 min, bike 38–40 min, run 26–28 min.',tag:'~192 lb'},
+    {n:12,name:'Race Season',desc:'Space Coast March 21. Birthday April 8. Pineapple Man June 6.',cond:'Race-day target 1:13–1:23 total. Novice podium range 1:18–1:25.',tag:'~189 lb'}
+  ];
+
+  blocks = [
+    {id:'b1',head:'Block 1 · Weeks 1–4 · Jun/Jul',label:'Block 1 · Foundation',chips:['Lift 3×','Swim 4×'],desc:'Straight lifting sets. Run 1× introduced week 4.'},
+    {id:'b2',head:'Block 2 · Weeks 5–9 · Aug/Sep',label:'Block 2 · Base',chips:['Lift 3×','Swim 4×','Run 1–2×'],desc:'Straight lifting sets. Swimming toward 1km continuous.'},
+    {id:'b3',head:'Block 3 · Month 3 · Oct/Dec',label:'Block 3 · All Disciplines',chips:['Lift 3×','Swim 2×','Run 2×','Bike 1×'],desc:'Begin PPL split. All three tri disciplines. Brick work begins.'},
+    {id:'b4',head:'Block 4 · Month 5–6 · 2027 & onward',label:'Block 4 · Full Tri',chips:['Lift 3×','Swim 2×','Run 2×','Bike 2×'],desc:'Full triathlon training. One brick per week.'},
+    {id:'rp',head:'Race Prep · Pre-race',label:'Race Prep',chips:['Lift 2×','Swim 2×','Run 2×','Bike 2×'],desc:'Gym triathlon simulation. Lighter lift.'},
+    {id:'tp',head:'Taper · Race week',label:'Taper',chips:[],desc:'Short easy swim, short easy run, rest.'}
+  ];
+
+  races = [
+    {date:'2026-09-19',label:'Sep 2026',name:'Eagle Pride 5K',place:'Melbourne FL · Open',note:'Just finish. First ever race.',isRace:true,big:false},
+    {date:'2027-03-21',label:'Mar 21, 2027',name:'Space Coast Triathlon',place:'Cocoa FL · Novice',note:'Race with your brother. Practice race. Holy Saturday.',isRace:true,big:false},
+    {date:'2027-04-08',label:'Apr 8, 2027',name:'30th Birthday',place:'Melbourne FL · Milestone',note:'The guy in the beach photo doesn\u2019t exist anymore.',isRace:false,big:false},
+    {date:'2027-06-06',label:'Jun 6, 2027',name:'Pineapple Man Triathlon',place:'Melbourne Beach FL · Novice',note:'Home race. Podium attempt. Beer and breakfast at the finish line.',isRace:true,big:true}
+  ];
+
+  lunches = [
+    {name:'Canned tuna 5oz',tag:'BEST',tone:'green',macros:'~130 cal · 30g pro'},
+    {name:'Artichoke stuffed chicken, ½ pkg',tag:'BEST',tone:'green',macros:'~210 cal · 28g pro'},
+    {name:'Broccoli stuffed chicken, ½ pkg',tag:'',tone:'',macros:'~190 cal · 27g pro'},
+    {name:'3 eggs + cheddar',tag:'',tone:'',macros:'~300 cal · 23g pro'},
+    {name:'Pulled chicken BBQ, ½ pkg',tag:'HIGH CARB',tone:'amber',macros:'~230 cal · 22g pro'},
+    {name:'Chicken fajitas, ½ pkg',tag:'SMALL',tone:'amber',macros:'~150 cal · 18g pro'},
+    {name:'Sliced beef brisket, ½ pkg',tag:'',tone:'',macros:'~205 cal · 18g pro'},
+    {name:'McDonald\u2019s double QP, no bun +cheese',tag:'EMERGENCY',tone:'orange',macros:'560 cal · 42g pro'}
+  ];
+
+  baseline = [
+    {k:"Swim", v:"1km continuous @ 2:36/100m", u:"Race leg (400m) is well within range"},
+    {k:"Bike", v:"7.5mi in 30 min (~15 mph)", u:"Baseline for easy / steady effort"},
+    {k:"Run", v:"1mi walk/jog in 14:30", u:"Start of the run-walk progression"},
+    {k:"Lift", v:"Full-body straight sets · 3×/wk", u:"Frequency stays fixed all plan"},
+    {k:"Body", v:"232 lb · 6′2″ · ~25% BF", u:"Volume scaled to protect joints in a deficit"}
+  ];
+
+  phasesOverview = [
+    {weeks:"1–2", name:"Foundation", focus:"Reorganize current training into the quota system; add first easy runs"},
+    {weeks:"3–11", name:"Base Building 1", focus:"Full quota reached; pure aerobic development across swim/bike/run"},
+    {weeks:"12–20", name:"Base Building 2", focus:"Extend duration, introduce tempo and the first brick sessions"},
+    {weeks:"21–29", name:"Build", focus:"Structured intervals, weekly bricks, highest combined volume"},
+    {weeks:"30–34", name:"Peak / Race-Specific", focus:"Race simulation, sharpening, still training all four disciplines"},
+    {weeks:"35–36", name:"Taper", focus:"Cut volume ~40–50%, stay sharp, arrive fresh"},
+    {weeks:"37", name:"Race Week", focus:"Short openers, then rest. Race day — Sun, Mar 21, 2027"}
+  ];
+
+  sessionPhases = [
+    {id:"p1", name:"Foundation", weeks:"Weeks 1–2", sessions:[
+      {d:"Lift ×3", t:"Continue Block 1 straight sets, full body, 45–50 min"},
+      {d:"Swim ×3", t:"1km continuous or broken, easy aerobic pace (~2:30–2:40/100m)"},
+      {d:"Bike ×2", t:"20–30 min easy stationary spin"},
+      {d:"Run ×1", t:"Walk/jog, 15–20 min — run when you can, walk when you need to"}
+    ], spacing:"Spread the 3 lifts out (not two days in a row) — recovery is slower in a deficit. Swim + lift pair well the same day. Put the run on a day with no lift and no bike. Sunday: full rest."},
+    {id:"p2", name:"Base Building 1", weeks:"Weeks 3–11", sessions:[
+      {d:"Lift ×3", t:"45–50 min full body, progressing load as strength allows"},
+      {d:"Swim ×2–3", t:"30–40 min, mostly easy aerobic with one slightly longer set"},
+      {d:"Bike ×2", t:"25–40 min, one easy + one moderate effort"},
+      {d:"Run ×1–2", t:"20–30 min run/walk, building toward continuous running"}
+    ], spacing:"By week 5 you're at full quota (2 swim / 2 bike / 2 run). Keep the two run days non-consecutive — running is highest-impact at this bodyweight. Bike and swim can sit closer. Lift on an easy swim/bike day; avoid heavy legs the day before your longer run."},
+    {id:"p3", name:"Base Building 2", weeks:"Weeks 12–20", sessions:[
+      {d:"Lift ×3", t:"45–50 min, shift toward strength / less pure hypertrophy as volume rises"},
+      {d:"Swim ×2", t:"35–45 min, technique + one tempo set per week"},
+      {d:"Bike ×2", t:"35–60 min, one long/steady + one with tempo effort"},
+      {d:"Run ×2", t:"25–40 min, add strides at the end of the easy run"},
+      {d:"Brick ×1", t:"Every other week (replaces one bike + one run) — 20–30 min bike into 15–20 min run"}
+    ], spacing:"The brick becomes your hardest day — put it on a weekend with the next day easy or off. Keep at least one full day between your two hardest non-brick sessions."},
+    {id:"p4", name:"Build", weeks:"Weeks 21–29", sessions:[
+      {d:"Lift ×3", t:"45 min, lower volume / higher intensity to reduce interference"},
+      {d:"Swim ×2", t:"40–45 min, race-pace repeats (8–10×100m) once per week"},
+      {d:"Bike ×2", t:"45–90 min, threshold intervals once per week + one long ride"},
+      {d:"Run ×2", t:"30–40 min, threshold or race-pace intervals once per week"},
+      {d:"Brick ×1", t:"Weekly (replaces one bike + one run) — bike w/ race-pace finish into a race-pace run"}
+    ], spacing:"Highest-load phase. The weekly brick and the long ride are your anchor hard days — separate by 2+ days. Keep lifting light enough it never leaves you too sore for the next session. Don't skip down weeks 24 & 28."},
+    {id:"p5", name:"Peak / Race-Specific", weeks:"Weeks 30–34", sessions:[
+      {d:"Lift ×3", t:"30–35 min, maintenance only — keep the pattern, don't chase PRs"},
+      {d:"Swim ×2", t:"30–40 min, race-pace focus, shorter and sharper"},
+      {d:"Bike ×2", t:"30–40 min easy + race-pace touches"},
+      {d:"Run ×2", t:"25–35 min, short and sharp race-pace intervals"},
+      {d:"Race sim", t:"Week 32 only — swim + T1 + bike + T2 + run at goal distances/effort"}
+    ], spacing:"Volume comes down but don't go silent on intensity — a few race-pace efforts weekly keep you sharp. Treat the week-32 sim as a dress rehearsal: same morning routine, nutrition, and gear as race day."},
+    {id:"p6", name:"Taper", weeks:"Weeks 35–36", sessions:[
+      {d:"Lift ×3→2", t:"Short, light, early in the week only"},
+      {d:"Swim ×1", t:"20–25 min easy + a few race-pace 25s"},
+      {d:"Bike ×1", t:"20–30 min easy + a few race-pace surges"},
+      {d:"Run ×1", t:"15–20 min easy + 3–4 short race-pace strides"}
+    ], spacing:"Front-load the week — harder/longer touches early (Tue/Wed), everything short and easy by Thu/Fri, full rest Saturday."},
+    {id:"p7", name:"Race Week", weeks:"Week 37 · race Sun Mar 21", sessions:[
+      {d:"Lift ×1", t:"Very short, early (Mon/Tue) — skip entirely if in doubt"},
+      {d:"Swim ×1", t:"10–15 min easy opener with a few fast 25s, early in the week"},
+      {d:"Bike ×1", t:"10–15 min easy spin with a couple of short race-pace bursts"},
+      {d:"Run", t:"Optional 5–10 min shakeout jog only, no later than Thursday"}
+    ], spacing:"Nothing after Thursday except an optional short Saturday shakeout. Fri/Sat are for logistics — bike check, gear, course, nutrition, sleep. Race Sunday: go have fun with your brother."}
+  ];
+
+  weeks37 = [
+    {wk:1, dates:"Jul 6–12", phase:"Foundation", q:"3/3/2/1", down:false, focus:"Reorganize into the quota system; trim swims 4→3, add first easy run"},
+    {wk:2, dates:"Jul 13–19", phase:"Foundation", q:"3/3/2/1", down:false, focus:"Lock in the weekly rhythm before volume climbs"},
+    {wk:3, dates:"Jul 20–26", phase:"Base 1", q:"3/3/2/1", down:false, focus:"Base Building 1 begins — consistency over intensity"},
+    {wk:4, dates:"Jul 27–Aug 2", phase:"Base 1", q:"3/3/2/2", down:false, focus:"Second easy run added — building run frequency carefully"},
+    {wk:5, dates:"Aug 3–9", phase:"Base 1", q:"3/2/2/2", down:false, focus:"Swim trimmed to 2×; full quota (3/2/2/2) reached for the first time"},
+    {wk:6, dates:"Aug 10–16", phase:"Base 1", q:"3/2/1/1", down:true, focus:"Down week — cut volume ~30%, everything easy"},
+    {wk:7, dates:"Aug 17–23", phase:"Base 1", q:"3/2/2/2", down:false, focus:"Resume building — longer bike and run sessions"},
+    {wk:8, dates:"Aug 24–30", phase:"Base 1", q:"3/2/2/2", down:false, focus:"Continue building the aerobic engine across all three"},
+    {wk:9, dates:"Aug 31–Sep 6", phase:"Base 1", q:"3/2/2/2", down:false, focus:"Longest swim/bike/run of the block so far"},
+    {wk:10, dates:"Sep 7–13", phase:"Base 1", q:"3/2/1/1", down:true, focus:"Down week — cut volume, prioritize sleep and protein"},
+    {wk:11, dates:"Sep 14–20", phase:"Base 1", q:"3/2/2/2", down:false, focus:"Peak of Base 1 — reassess how real paces have moved"},
+    {wk:12, dates:"Sep 21–27", phase:"Base 2", q:"3/2/2/2", down:false, focus:"Base Building 2 begins — first strides added to easy runs"},
+    {wk:13, dates:"Sep 28–Oct 4", phase:"Base 2", q:"3/2/2/2", down:false, focus:"Continue extending swim/bike/run duration"},
+    {wk:14, dates:"Oct 5–11", phase:"Base 2", q:"3/2/2/2", down:false, focus:"Introduce light tempo in one bike and one run"},
+    {wk:15, dates:"Oct 12–18", phase:"Base 2", q:"3/1/1/1", down:true, focus:"Down week — shorter and easier across the board"},
+    {wk:16, dates:"Oct 19–25", phase:"Base 2", q:"3/2/2/2", down:false, focus:"First brick session (bike → run) introduced"},
+    {wk:17, dates:"Oct 26–Nov 1", phase:"Base 2", q:"3/2/2/2", down:false, focus:"Continue building duration + a second brick this week"},
+    {wk:18, dates:"Nov 2–8", phase:"Base 2", q:"3/2/2/2", down:false, focus:"Sustained aerobic work, swim technique refinement"},
+    {wk:19, dates:"Nov 9–15", phase:"Base 2", q:"3/1/1/1", down:true, focus:"Down week before the peak of the block"},
+    {wk:20, dates:"Nov 16–22", phase:"Base 2", q:"3/2/2/2", down:false, focus:"Peak of Base 2 — dress-rehearsal brick at moderate effort"},
+    {wk:21, dates:"Nov 23–29", phase:"Build", q:"3/2/2/2", down:false, focus:"Build begins — structured intervals introduced"},
+    {wk:22, dates:"Nov 30–Dec 6", phase:"Build", q:"3/2/2/2", down:false, focus:"Threshold work on the bike and in the run"},
+    {wk:23, dates:"Dec 7–13", phase:"Build", q:"3/2/2/2", down:false, focus:"Weekly brick becomes the standard weekend session"},
+    {wk:24, dates:"Dec 14–20", phase:"Build", q:"3/1/1/1", down:true, focus:"Down week — cut volume, keep a little intensity"},
+    {wk:25, dates:"Dec 21–27", phase:"Build", q:"3/2/2/2", down:false, focus:"Race-pace intervals introduced across all three"},
+    {wk:26, dates:"Dec 28–Jan 3", phase:"Build", q:"3/2/2/2", down:false, focus:"Continue race-pace work, longest brick so far"},
+    {wk:27, dates:"Jan 4–10", phase:"Build", q:"3/2/2/2", down:false, focus:"Peak Build — highest combined volume of the plan"},
+    {wk:28, dates:"Jan 11–17", phase:"Build", q:"3/1/1/1", down:true, focus:"Down week — absorb the block before Peak"},
+    {wk:29, dates:"Jan 18–24", phase:"Build", q:"3/2/2/2", down:false, focus:"Final Build week — one more big push before sharpening"},
+    {wk:30, dates:"Jan 25–31", phase:"Peak", q:"3/2/2/2", down:false, focus:"Peak begins — shift from volume to race-specific sharpness"},
+    {wk:31, dates:"Feb 1–7", phase:"Peak", q:"3/2/2/2", down:false, focus:"Race-pace sharpening, shorter and faster"},
+    {wk:32, dates:"Feb 8–14", phase:"Peak", q:"3/2/2/2", down:false, focus:"Full race-simulation week — swim + T1 + bike + T2 + run at goal"},
+    {wk:33, dates:"Feb 15–21", phase:"Peak", q:"3/1/1/1", down:true, focus:"Down week — freshen up before the final peak week"},
+    {wk:34, dates:"Feb 22–28", phase:"Peak", q:"3/2/2/2", down:false, focus:"Final peak week — short, sharp, race-pace touches only"},
+    {wk:35, dates:"Mar 1–7", phase:"Taper", q:"3/1/1/1", down:false, focus:"Taper 1 — volume drops ~40–50%, keep a few race-pace efforts"},
+    {wk:36, dates:"Mar 8–14", phase:"Taper", q:"2/1/1/1", down:false, focus:"Taper 2 — very light, mostly rest, short openers only"},
+    {wk:37, dates:"Mar 15–21", phase:"Race Week", q:"1/1/1/0", down:false, focus:"Final short openers early, then rest. RACE DAY Sun Mar 21 — Space Coast, Cocoa FL"}
+  ];
+
+  sessionMenu = [
+    {group:"Swim", items:[
+      {n:"Easy / aerobic", d:"continuous or broken around 2:30–2:40/100m, RPE 4–5."},
+      {n:"Technique set", d:"drills (catch-up, fingertip drag, single-arm) mixed with easy swimming."},
+      {n:"Tempo / race-pace", d:"50–100m repeats faster than easy pace, RPE 6–8, short rest."}
+    ]},
+    {group:"Bike", items:[
+      {n:"Easy spin", d:"RPE 3–4, ~15 mph steady or easier."},
+      {n:"Tempo", d:"sustained 8–15 min efforts at RPE 6 — comfortably hard."},
+      {n:"Threshold / intervals", d:"3–8 min at RPE 7–8 with equal or shorter recovery."},
+      {n:"Long ride", d:"the week's longest aerobic effort, mostly RPE 4–5."}
+    ]},
+    {group:"Run", items:[
+      {n:"Run/walk or easy", d:"RPE 3–4, conversational — walk breaks fine early on."},
+      {n:"Strides", d:"15–20 sec relaxed accelerations, full recovery."},
+      {n:"Tempo / threshold", d:"RPE 6–7, sustained or 3–5 min repeats."},
+      {n:"Race-pace intervals", d:"short, sharp efforts at goal pace with full recovery."}
+    ]},
+    {group:"Brick", items:[
+      {n:"Bike → run", d:"bike straight into a run, no rest — trains the jelly-leg feeling. Occasional in Base 2, weekly by Build, full-distance sim once in Peak."}
+    ]},
+    {group:"Lift", items:[
+      {n:"Block 1 → maintenance", d:"straight sets through Foundation & Base 1. From Base 2 on, shift toward strength and movement-quality maintenance so lifting supports the triathlon instead of competing for recovery."}
+    ]}
+  ];
+
+  recoverySigns = [
+    "Resting heart rate up 5+ beats for 2+ mornings in a row",
+    "Persistent fatigue, irritability, or disrupted sleep",
+    "Performance dropping in easy sessions that should feel easy",
+    "Nagging soreness in the same spot for more than a few days",
+    "Hunger or low energy making sessions feel much harder than the numbers"
+  ];
+
+  adjustNotes = [
+    "As weight drops: running gets easier per 5–10 lb lost — run progress may outpace the schedule. That's a good problem.",
+    "If 3 lifts/week gets hard: cut a lift to 20–30 min of the key movements rather than skipping it outright.",
+    "After a retest (every 8–10 wks): repeat the same swim, bike protocol, and timed mile — use the trend, not one number.",
+    "Illness or injury: take the time off. Resume at the volume from 1–2 weeks before you stopped, then rebuild.",
+    "Missed a session? Don't cram it in — resume where you are. Missed a whole week? Drop back one week's volume first."
+  ];
+
+  conditioning = [
+    {id:'swimDist',  label:'Swim distance / session (m)', unit:'m',   start:300, target:1000, dir:'up'},
+    {id:'bikeDist',  label:'Bike distance / session (mi)', unit:'mi',  start:1, target:20,   dir:'up'},
+    {id:'runDist',   label:'Run distance / session (mi)',  unit:'mi',  start:1,   target:5,    dir:'up'},
+    {id:'swimPace',  label:'Swim pace (min / 100m)',       unit:'min', start:2.6, target:1.5,  dir:'down'},
+    {id:'runSpeed',  label:'Run speed (mph)',              unit:'mph', start:4,   target:7,    dir:'up'},
+    {id:'bikeSpeed', label:'Bike speed (mph)',             unit:'mph', start:15,  target:20,   dir:'up'}
+  ];
+
+  condDefaults = { swimDist:800, bikeDist:12, runDist:2, swimPace:2.3, runSpeed:5, bikeSpeed:16 };
+
+  state = {
+    tab:'home', weight:232, bodyfat:24,
+    swimDist:800, bikeDist:12, runDist:2, swimPace:2.3, runSpeed:5, bikeSpeed:16,
+    monthsDone:{}, blocksDone:{}, open:{p1:true}
+  };
+
+  componentDidMount(){
+    let loaded = false;
+    try {
+      const raw = localStorage.getItem(this.KEY);
+      if (raw){ const saved = JSON.parse(raw); this.setState(s=>({...s, ...saved, open:{...s.open, ...(saved.open||{})}})); loaded = true; }
+    } catch(e){}
+    if (!loaded && this.props.defaultTab) this.setState({tab:this.props.defaultTab});
+  }
+
+  save(){ try { localStorage.setItem(this.KEY, JSON.stringify(this.state)); } catch(e){} }
+  set(patch){ this.setState(patch, ()=>this.save()); }
+  go(t){ this.set({tab:t}); }
+  num(key){ return (e)=>{ const v=parseFloat(e.target.value); this.set({[key]: isNaN(v)?0:v}); }; }
+  toggleMonth(n){ const m={...this.state.monthsDone}; m[n]=!m[n]; this.set({monthsDone:m}); }
+  toggleBlock(id){ const b={...this.state.blocksDone}; b[id]=!b[id]; this.set({blocksDone:b}); }
+  toggleOpen(id){ const o={...(this.state.open||{})}; o[id]=!o[id]; this.set({open:o}); }
+  reset(){
+    this.setState({
+      weight:this.props.startWeight??236, bodyfat:24, ...this.condDefaults,
+      monthsDone:{}, blocksDone:{}
+    }, ()=>this.save());
+  }
+
+  renderVals(){
+    const s = this.state;
+    const SW = this.props.startWeight ?? 236, GW = this.props.goalWeight ?? 189;
+    const SBF = 25, GBF = this.props.goalBodyFat ?? 15;
+    const clamp = x => Math.max(0, Math.min(100, x));
+    const fill = p => ({width:clamp(p)+'%',height:'100%',borderRadius:'inherit',background:'linear-gradient(90deg,#b6440e,#FF6B2B)',transition:'width .25s ease'});
+
+    const conditioningView = this.conditioning.map(c=>{
+      const v = s[c.id];
+      const pct = c.dir==='down' ? (c.start - v)/(c.start - c.target)*100 : (v - c.start)/(c.target - c.start)*100;
+      return { ...c, value:v, set:this.num(c.id), fill:fill(pct), targetLabel:'target '+c.target+' '+c.unit };
+    });
+
+    const monthsDoneCount = this.months.filter(m=>s.monthsDone[m.n]).length;
+    const blocksDoneCount = this.blocks.filter(b=>s.blocksDone[b.id]).length;
+
+    const monthsView = this.months.map(m=>{
+      const done = !!s.monthsDone[m.n];
+      return { ...m, done, toggle:()=>this.toggleMonth(m.n),
+        dot:{width:'30px',height:'30px',borderRadius:'50%',border:'2px solid #FF6B2B',background:done?'#FF6B2B':'transparent',color:done?'#0F1F38':'#FF6B2B',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,fontFamily:"'Bebas Neue',sans-serif",fontSize:'14px',transition:'all .15s'},
+        title:{fontSize:'13px',fontWeight:600,color:done?'#F0EDE8':'#F0EDE8'} };
+    });
+    const blocksView = this.blocks.map(b=>{
+      const done = !!s.blocksDone[b.id];
+      return { ...b, done, toggle:()=>this.toggleBlock(b.id),
+        box:{width:'24px',height:'24px',borderRadius:'6px',border:'2px solid '+(done?'#FF6B2B':'#3a3a3a'),background:done?'#FF6B2B':'transparent',color:'#0F1F38',display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0,fontSize:'14px',fontWeight:800,transition:'all .15s'},
+        title:{fontSize:'13px',color:'#F0EDE8',fontWeight:500} };
+    });
+
+    const tones = {
+      green:{background:'#173404',color:'#97c459'},
+      amber:{background:'#412402',color:'#ef9f27'},
+      orange:{background:'rgba(255,107,43,0.15)',color:'#FF6B2B'}
+    };
+    const lunches = this.lunches.map(l=>({
+      name:l.name, macros:l.macros, tag:l.tag,
+      row:{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'7px 0',fontSize:'13px',gap:'1rem',borderBottom:'1px solid #2a2a2a'},
+      tagStyle: l.tag ? {fontSize:'10px',borderRadius:'4px',padding:'2px 7px',marginLeft:'6px',whiteSpace:'nowrap',...(tones[l.tone]||tones.green)} : {display:'none'}
+    }));
+
+    const racesView = this.races.map(r=>({
+      ...r,
+      card:{background:'#1e1e1e',border:'1px solid #2a2a2a',borderLeft:r.big?'3px solid #FF6B2B':'1px solid #2a2a2a',borderRadius:'10px',padding:'0.8rem 1rem'}
+    }));
+
+    const today = new Date();
+    const pd = d => new Date(d + 'T00:00:00');
+    const upcoming = this.races.filter(r=>r.isRace && pd(r.date) >= today).sort((a,b)=>pd(a.date)-pd(b.date));
+    const next = upcoming[0] || this.races[this.races.length-1];
+    const daysToRace = Math.max(0, Math.ceil((pd(next.date) - today) / 86400000));
+
+    const op = s.open || {};
+    const chev = o => ({fontSize:'15px',color:'#6b85a0',transition:'transform .2s',transform:o?'rotate(180deg)':'rotate(0deg)',display:'inline-block'});
+    const sessionPhasesView = this.sessionPhases.map(p=>({...p, open:!!op[p.id], toggle:()=>this.toggleOpen(p.id), chev:chev(!!op[p.id])}));
+    const weeks37View = this.weeks37.map(w=>({...w, rowStyle:{borderTop:'1px solid #242424', ...(w.down?{background:'rgba(255,107,43,0.07)'}:{})}}));
+
+    const ico = t => ({color: s.tab===t ? '#FF6B2B' : '#6b85a0', width:'22px', height:'22px'});
+    const lbl = t => ({fontSize:'10px', letterSpacing:'0.03em', color: s.tab===t ? '#FF6B2B' : '#6b85a0'});
+
+    return {
+      tab:s.tab, isHome:s.tab==='home', isDiet:s.tab==='diet', isWorkout:s.tab==='workout', isRoadmap:s.tab==='roadmap',
+      goHome:()=>this.go('home'), goDiet:()=>this.go('diet'), goWorkout:()=>this.go('workout'), goRoadmap:()=>this.go('roadmap'),
+
+      weight:s.weight, startWeight:SW, goalWeight:GW,
+      lost:Math.max(0, Math.round(SW - s.weight)), toGo:Math.max(0, Math.round(s.weight - GW)),
+      weightFill: fill((SW - s.weight)/(SW - GW)*100),
+
+      bodyfat:s.bodyfat, startBF:SBF, goalBF:GBF, bfFill: fill((SBF - s.bodyfat)/(SBF - GBF)*100),
+
+      conditioningView,
+
+      setWeight:this.num('weight'), setBF:this.num('bodyfat'),
+
+      monthsView, blocksView, workoutBlocks:this.blocks, lunches, racesView,
+      monthsDoneCount, monthsTotal:this.months.length, monthsFill: fill(monthsDoneCount/this.months.length*100),
+      blocksDoneCount, blocksTotal:this.blocks.length, blocksFill: fill(blocksDoneCount/this.blocks.length*100),
+
+      daysToRace, nextRaceName:next.name, nextRaceDateLabel:next.label,
+      reset:()=>this.reset(),
+
+      baseline:this.baseline, phasesOverview:this.phasesOverview, sessionPhasesView, weeks37View,
+      sessionMenu:this.sessionMenu, recoverySigns:this.recoverySigns, adjustNotes:this.adjustNotes,
+      openBaseline:!!op.baseline, toggleBaseline:()=>this.toggleOpen('baseline'), chevBaseline:chev(!!op.baseline),
+      openWeeks:!!op.weeks, toggleWeeks:()=>this.toggleOpen('weeks'), chevWeeks:chev(!!op.weeks),
+      openMenu:!!op.menu, toggleMenu:()=>this.toggleOpen('menu'), chevMenu:chev(!!op.menu),
+      openRecovery:!!op.recovery, toggleRecovery:()=>this.toggleOpen('recovery'), chevRecovery:chev(!!op.recovery),
+      openAdjust:!!op.adjust, toggleAdjust:()=>this.toggleOpen('adjust'), chevAdjust:chev(!!op.adjust),
+
+      homeIco:ico('home'), dietIco:ico('diet'), workIco:ico('workout'), roadIco:ico('roadmap'),
+      homeLbl:lbl('home'), dietLbl:lbl('diet'), workLbl:lbl('workout'), roadLbl:lbl('roadmap')
+    };
+  }
+}
+</script>
+</body>
+</html>
